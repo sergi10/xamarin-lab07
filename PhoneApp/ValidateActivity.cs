@@ -28,17 +28,33 @@ namespace PhoneApp
             var PasswordEntry = FindViewById<TextView>(Resource.Id.passwordEntry);
             var ValidateButton = FindViewById<Button>(Resource.Id.ValidateButton);
 
-            var ServiceClient = new SALLab06.ServiceClient();
+            var ServiceClient = new SALLab07.ServiceClient();
 
             ValidateButton.Click += async (object sender, System.EventArgs e) =>
             {
                 string myDevice = Android.Provider.Settings.Secure.GetString(ContentResolver, Android.Provider.Settings.Secure.AndroidId);
-                var Result = await ServiceClient.ValidateAsync(EmailEntry.Text, PasswordEntry.Text, myDevice);
+                //var Result = await ServiceClient.ValidateAsync(EmailEntry.Text, PasswordEntry.Text, myDevice);
+                //string result = $"{ Result.Status} { Result.Fullname} { Result.Token}"
+                string title = $"Validación de la actividad";
+                string result = $"Mensajede la notificación";
+                if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+                {
+                    var Builder = new Notification.Builder(this)
+                            .SetContentTitle(title)
+                            .SetContentText(result)
+                            .SetSmallIcon(Resource.Drawable.Icon);
+                    Builder.SetCategory(Notification.CategoryMessage);
+                    var ObjectNotification = Builder.Build();
+                    var Manager = GetSystemService(Android.Content.Context.NotificationService) as NotificationManager;
 
-                MessageView.Text = $"{ Result.Status}\n{ Result.Fullname}\n{ Result.Token}";
-               // MessageView.Text = "asdfbib \napshdfaosdnfon\n apsodfna \t 123";
+                    Manager.Notify(0, ObjectNotification);
+                }
+                else
+                {
+                    //MessageView.Text = $"{ Result.Status}\n{ Result.Fullname}\n{ Result.Token}";
+                }
             };
-     
+
         }
     }
 }
