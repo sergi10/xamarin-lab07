@@ -17,14 +17,7 @@ namespace PhoneApp
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.UserDataLayout);
             var Intent = new Android.Content.Intent(this, typeof(ValidateActivity));
-            StartActivity(Intent);
-
-
-            //  ValidateActivityButton.Click += (object sender, System.EventArgs e) =>
-            //{
-            //  var Intent = new Android.Content.Intent(this, typeof(ValidateActivity));
-            //StartActivity(Intent);
-            //  };           
+            StartActivity(Intent);     
         }
     }
 }

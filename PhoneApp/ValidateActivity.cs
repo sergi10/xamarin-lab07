@@ -33,11 +33,10 @@ namespace PhoneApp
             ValidateButton.Click += async (object sender, System.EventArgs e) =>
             {
                 string myDevice = Android.Provider.Settings.Secure.GetString(ContentResolver, Android.Provider.Settings.Secure.AndroidId);
-                //var Result = await ServiceClient.ValidateAsync(EmailEntry.Text, PasswordEntry.Text, myDevice);
-                //string result = $"{ Result.Status} { Result.Fullname} { Result.Token}"
+                var Result = await ServiceClient.ValidateAsync(EmailEntry.Text, PasswordEntry.Text, myDevice);
+                string result = $"{ Result.Status} { Result.Fullname} { Result.Token}";
                 string title = $"Validación de la actividad";
-                string result = $"Mensajede la notificación";
-                if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+                if (Android.OS.Build.VERSION.SdkInt <= BuildVersionCodes.Lollipop)
                 {
                     var Builder = new Notification.Builder(this)
                             .SetContentTitle(title)
@@ -51,7 +50,7 @@ namespace PhoneApp
                 }
                 else
                 {
-                    //MessageView.Text = $"{ Result.Status}\n{ Result.Fullname}\n{ Result.Token}";
+                    MessageView.Text = $"{ Result.Status}\n{ Result.Fullname}\n{ Result.Token}";
                 }
             };
 
